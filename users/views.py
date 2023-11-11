@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.pagination import PageNumberPagination
+from users.filters import UserFilter
 
 # Utils
 from users.utils import get_tokens_for_user
@@ -104,6 +105,7 @@ def all_users(request):
     paginator = PageNumberPagination()
     paginator.page_size = 10
     users = User.objects.all()
-    result_page = paginator.paginate_queryset(users, request)
+    user_filter = UserFilter(request.GET, queryset=users)
+    result_page = paginator.paginate_queryset(user_filter.qs, request)
     serializer = UserSerializerWithFriends(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
