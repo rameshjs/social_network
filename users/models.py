@@ -48,6 +48,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
-
-    def get_absolute_url(self):
-        return "/users/%i/" % (self.pk)
