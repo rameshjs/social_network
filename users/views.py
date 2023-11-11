@@ -1,11 +1,12 @@
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.pagination import PageNumberPagination
 from users.filters import UserFilter
+from rest_framework.throttling import UserRateThrottle
 
 # Utils
 from users.utils import get_tokens_for_user
@@ -47,6 +48,7 @@ def sign_in(request):
 
 
 @api_view(["POST"])
+@throttle_classes([UserRateThrottle])
 def send_friend_request(request):
     serializer = FriendRequestSerializer(
         data=request.data, context={"request": request}
