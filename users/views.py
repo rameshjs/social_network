@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from django.shortcuts import get_object_or_404
 
 # Utils
 from users.utils import get_tokens_for_user
@@ -54,4 +55,30 @@ def send_friend_request(request):
 def pending_friend_request(request):
     friend_requests = FriendRequest.objects.filter(sent_to=request.user)
     serializer = PendingFriendRequestSerializer(friend_requests, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+def accept_friend_request(request, request_id):
+    friend_request = get_object_or_404(
+        FriendRequest,
+        sent_to=request.user,
+        pk=request_id,
+        status=FriendRequest.STATUS_CHOICES[0][0],
+    )
+    friend_request.accept_friend_request()
+    serializer = PendingFriendRequestSerializer(friend_request)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+def reject_friend_request(request, request_id):
+    friend_request = get_object_or_404(
+        FriendRequest,
+        sent_to=request.user,
+        pk=request_id,
+        status=FriendRequest.STATUS_CHOICES[0][0],
+    )
+    friend_request.reject_friend_request()
+    serializer = PendingFriendRequestSerializer(friend_request)
     return Response(serializer.data, status=status.HTTP_200_OK)

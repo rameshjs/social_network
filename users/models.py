@@ -66,3 +66,17 @@ class FriendRequest(models.Model):
         User, on_delete=models.CASCADE, related_name="requests_received"
     )
     sent_on = models.DateTimeField(auto_now_add=True)
+
+    def accept_friend_request(self):
+        if self.status == 1:  # Check if the request is still pending
+            self.status = 2  # Update the status to 'Accepted'
+            self.save()
+
+            # Create two-way friendships
+            self.sent_from.friends.add(self.sent_to)
+            self.sent_to.friends.add(self.sent_from)
+
+    def reject_friend_request(self):
+        if self.status == 1:  # Check if the request is still pending
+            self.status = 3  # Update the status to 'Rejected'
+            self.save()

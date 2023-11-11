@@ -10,4 +10,14 @@ urlpatterns = [
         views.pending_friend_request,
         name="pending_friend_request",
     ),
+    path(
+        "accept_friend_request/<int:request_id>",
+        views.accept_friend_request,
+        name="accept_friend_request",
+    ),
+    path(
+        "reject_friend_request/<int:request_id>",
+        views.reject_friend_request,
+        name="reject_friend_request",
+    ),
 ]
