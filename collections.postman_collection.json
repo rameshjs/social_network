@@ -1,0 +1,281 @@
+{
+	"info": {
+		"_postman_id": "c5a43a27-3175-439b-a2cd-536609dfc46e",
+		"name": "collections",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22879541"
+	},
+	"item": [
+		{
+			"name": "Sign up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/users/sign_up",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"sign_up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign in",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/users/sign_in",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"sign_in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send friend request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxMjI0ODgxLCJpYXQiOjE2OTk2ODg4ODEsImp0aSI6ImZlN2Y2YjQ3NmVhNzQzZGFiNGVlMTM0NzdhNTk0ZmZhIiwidXNlcl9pZCI6MTIyfQ.pJYhhJy46bLcPtiMDOWSdPllgd-_-ZJ9CEUGUVd-zOc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sent_to\": 81\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/users/send_friend_request",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"send_friend_request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all friends",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxMjI0ODgxLCJpYXQiOjE2OTk2ODg4ODEsImp0aSI6ImZlN2Y2YjQ3NmVhNzQzZGFiNGVlMTM0NzdhNTk0ZmZhIiwidXNlcl9pZCI6MTIyfQ.pJYhhJy46bLcPtiMDOWSdPllgd-_-ZJ9CEUGUVd-zOc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/users/friends",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"friends"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxMjI0ODgxLCJpYXQiOjE2OTk2ODg4ODEsImp0aSI6ImZlN2Y2YjQ3NmVhNzQzZGFiNGVlMTM0NzdhNTk0ZmZhIiwidXNlcl9pZCI6MTIyfQ.pJYhhJy46bLcPtiMDOWSdPllgd-_-ZJ9CEUGUVd-zOc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/users/all_users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"all_users"
+					],
+					"query": [
+						{
+							"key": "A",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users with filter",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxMjI0ODgxLCJpYXQiOjE2OTk2ODg4ODEsImp0aSI6ImZlN2Y2YjQ3NmVhNzQzZGFiNGVlMTM0NzdhNTk0ZmZhIiwidXNlcl9pZCI6MTIyfQ.pJYhhJy46bLcPtiMDOWSdPllgd-_-ZJ9CEUGUVd-zOc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/users/all_users?search=test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"all_users"
+					],
+					"query": [
+						{
+							"key": "A",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all pending friend requests",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxMjI0ODgxLCJpYXQiOjE2OTk2ODg4ODEsImp0aSI6ImZlN2Y2YjQ3NmVhNzQzZGFiNGVlMTM0NzdhNTk0ZmZhIiwidXNlcl9pZCI6MTIyfQ.pJYhhJy46bLcPtiMDOWSdPllgd-_-ZJ9CEUGUVd-zOc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/users/pending_friend_request",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"pending_friend_request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept friend request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxMjI0ODgxLCJpYXQiOjE2OTk2ODg4ODEsImp0aSI6ImZlN2Y2YjQ3NmVhNzQzZGFiNGVlMTM0NzdhNTk0ZmZhIiwidXNlcl9pZCI6MTIyfQ.pJYhhJy46bLcPtiMDOWSdPllgd-_-ZJ9CEUGUVd-zOc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/users/accept_friend_request/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"accept_friend_request",
+						"5"
+					]
+				},
+				"description": "Need to pass id of the friend request object id."
+			},
+			"response": []
+		},
+		{
+			"name": "Reject friend request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxMjI0ODgxLCJpYXQiOjE2OTk2ODg4ODEsImp0aSI6ImZlN2Y2YjQ3NmVhNzQzZGFiNGVlMTM0NzdhNTk0ZmZhIiwidXNlcl9pZCI6MTIyfQ.pJYhhJy46bLcPtiMDOWSdPllgd-_-ZJ9CEUGUVd-zOc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/users/reject_friend_request/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"reject_friend_request",
+						"5"
+					]
+				},
+				"description": "Need to pass freind request object id"
+			},
+			"response": []
+		}
+	]
+}
