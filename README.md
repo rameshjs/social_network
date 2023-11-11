@@ -3,7 +3,7 @@
 
 ```
 docker compose build
-ddocker compose up
+docker compose up
 ```
 
 
