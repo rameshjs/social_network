@@ -82,7 +82,10 @@ class FriendRequestSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "email"]
+        fields = [
+            "id",
+            "email",
+        ]
 
 
 class PendingFriendRequestSerializer(serializers.ModelSerializer):
@@ -93,3 +96,13 @@ class PendingFriendRequestSerializer(serializers.ModelSerializer):
         model = FriendRequest
         fields = ["id", "sent_from", "sent_to", "status", "sent_on"]
         read_only_fields = ["id", "sent_on"]
+
+
+class UserSerializerWithFriends(UserSerializer):
+    friends = UserSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = UserSerializer.Meta.fields + [
+            "friends",
+        ]

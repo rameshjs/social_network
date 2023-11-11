@@ -5,6 +5,8 @@ urlpatterns = [
     path("sign_up", views.sign_up, name="sign_up"),
     path("sign_in", views.sign_in, name="sign_in"),
     path("send_friend_request", views.send_friend_request, name="send_friend_request"),
+    path("friends", views.friends, name="friends"),
+    path("all_users", views.all_users, name="all_users"),
     path(
         "pending_friend_request",
         views.pending_friend_request,

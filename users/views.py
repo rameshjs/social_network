@@ -3,6 +3,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
+from rest_framework.pagination import PageNumberPagination
 
 # Utils
 from users.utils import get_tokens_for_user
@@ -13,10 +15,13 @@ from users.serializers import (
     LoginSerializer,
     FriendRequestSerializer,
     PendingFriendRequestSerializer,
+    UserSerializerWithFriends,
 )
 
 # Models
 from users.models import FriendRequest
+
+User = get_user_model()
 
 
 @api_view(["POST"])
@@ -82,3 +87,23 @@ def reject_friend_request(request, request_id):
     friend_request.reject_friend_request()
     serializer = PendingFriendRequestSerializer(friend_request)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def friends(request):
+    current_user = get_object_or_404(
+        User,
+        pk=request.user.id,
+    )
+    serializer = UserSerializerWithFriends(current_user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def all_users(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+    users = User.objects.all()
+    result_page = paginator.paginate_queryset(users, request)
+    serializer = UserSerializerWithFriends(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
