@@ -42,9 +42,27 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
+    friends = models.ManyToManyField("self", symmetrical=True, blank=True)
 
     USERNAME_FIELD = "email"
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+
+class FriendRequest(models.Model):
+    STATUS_CHOICES = (
+        (1, "Pending"),
+        (2, "Accepted"),
+        (3, "Rejected"),
+    )
+
+    status = models.IntegerField(choices=STATUS_CHOICES, default=1)
+    sent_from = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="requests_sent"
+    )
+    sent_to = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="requests_received"
+    )
+    sent_on = models.DateTimeField(auto_now_add=True)

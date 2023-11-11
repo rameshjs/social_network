@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from users.models import User
+from users.models import User, FriendRequest
 
 
 class UserAdmin(BaseUserAdmin):
@@ -35,3 +35,15 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+
+
+class FriendRequestAdmin(admin.ModelAdmin):
+    list_display = (
+        "sent_from",
+        "sent_to",
+        "status",
+    )
+    search_fields = ("sent_from", "sent_to", "status")
+
+
+admin.site.register(FriendRequest, FriendRequestAdmin)

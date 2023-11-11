@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 from users.utils import get_tokens_for_user
 
 # Serializers
-from users.serializers import SignUpSerializer, LoginSerializer
+from users.serializers import SignUpSerializer, LoginSerializer, FriendRequestSerializer
 
 
 @api_view(["POST"])
@@ -28,4 +28,15 @@ def sign_in(request):
     if serializer.is_valid():
         token = get_tokens_for_user(serializer.data["email"])
         return Response({"token": token}, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+def send_friend_request(request):
+    serializer = FriendRequestSerializer(
+        data=request.data, context={"request": request}
+    )
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

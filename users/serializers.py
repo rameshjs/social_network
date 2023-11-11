@@ -3,6 +3,9 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import authenticate
 
+# Models
+from users.models import FriendRequest
+
 User = get_user_model()
 
 
@@ -32,3 +35,44 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid credentials. Please try again.")
 
         return user
+
+
+"""
+Serializer for handling friend requests.
+validate(data): Custom validation method to check if the sender and receiver are valid for a friend request.
+create(validated_data): Method to create a friend request object in the database.
+"""
+
+
+class FriendRequestSerializer(serializers.Serializer):
+    sent_to = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+
+    def validate(self, data):
+        sent_from_user = self.context["request"].user
+        sent_to_user = data["sent_to"]
+
+        if sent_from_user == sent_to_user:
+            raise serializers.ValidationError(
+                "Cannot send a friend request to yourself."
+            )
+
+        existing_request = FriendRequest.objects.filter(
+            sent_from=sent_from_user,
+            sent_to=sent_to_user,
+            status=FriendRequest.STATUS_CHOICES[0][0],
+        ).first()
+
+        if existing_request:
+            raise serializers.ValidationError("Friend request already sent.")
+
+        return data
+
+    def create(self, validated_data):
+        sent_to_user = validated_data["sent_to"]
+        sent_from_user = self.context["request"].user
+
+        friend_request = FriendRequest.objects.create(
+            sent_to=sent_to_user, sent_from=sent_from_user
+        )
+
+        return friend_request
