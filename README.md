@@ -1,5 +1,13 @@
 ## Dev environment setup
+## To run via docker
 
+```
+docker compose build
+ddocker compose up
+```
+
+
+## To run locally without docker
 ### Prerequisites
 - Python 3.x installed on your system.
 - Pip (Python package manager) installed.
