@@ -51,6 +51,7 @@ class FriendRequestSerializer(serializers.Serializer):
         sent_from_user = self.context["request"].user
         sent_to_user = data["sent_to"]
 
+        # User cant add themselves as a friend.
         if sent_from_user == sent_to_user:
             raise serializers.ValidationError(
                 "Cannot send a friend request to yourself."
@@ -76,3 +77,19 @@ class FriendRequestSerializer(serializers.Serializer):
         )
 
         return friend_request
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "email"]
+
+
+class PendingFriendRequestSerializer(serializers.ModelSerializer):
+    sent_from = UserSerializer()
+    sent_to = UserSerializer()
+
+    class Meta:
+        model = FriendRequest
+        fields = ["id", "sent_from", "sent_to", "status", "sent_on"]
+        read_only_fields = ["id", "sent_on"]

@@ -7,7 +7,15 @@ from rest_framework.permissions import AllowAny
 from users.utils import get_tokens_for_user
 
 # Serializers
-from users.serializers import SignUpSerializer, LoginSerializer, FriendRequestSerializer
+from users.serializers import (
+    SignUpSerializer,
+    LoginSerializer,
+    FriendRequestSerializer,
+    PendingFriendRequestSerializer,
+)
+
+# Models
+from users.models import FriendRequest
 
 
 @api_view(["POST"])
@@ -40,3 +48,10 @@ def send_friend_request(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def pending_friend_request(request):
+    friend_requests = FriendRequest.objects.filter(sent_to=request.user)
+    serializer = PendingFriendRequestSerializer(friend_requests, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
